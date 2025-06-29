@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+    id 'jacoco'
+    id 'application' // For executable apps
+}
+
+application {
+    mainClass = 'ho.reverse.polish.calculator.ReversePolishCalculatorMain' // Matches  class name
+}
+
+group 'org.example'
+version '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+}
+
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+    finalizedBy jacocoTestCoverageVerification
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
+
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 1.0 // 100% coverage
+            }
+        }
+    }
+}
+
+check.dependsOn jacocoTestCoverageVerification
